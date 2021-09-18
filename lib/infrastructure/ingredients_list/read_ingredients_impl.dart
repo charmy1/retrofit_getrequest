@@ -14,7 +14,7 @@ class IngredientsInterfaceImpl implements IngredientsInterface {
   @override
   Future<Either<Failure, IngredientsResponseModel>> readAllIngredients() async {
     try {
-      var result = await _restClient.getIngredients(queryi: "list");
+      var result = await _restClient.getIngredients("list");
       print("Data");
       print(result.toString());
 

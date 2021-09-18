@@ -7,10 +7,13 @@ part 'ingredients_response_model.freezed.dart';
 part 'ingredients_response_model.g.dart';
 
 @freezed
-abstract class IngredientsResponseModel with _$IngredientsResponseModel {
-  @JsonSerializable(explicitToJson: true)
+ class IngredientsResponseModel with _$IngredientsResponseModel {
+
+ const IngredientsResponseModel._();
+
+ @JsonSerializable(explicitToJson: true)
   const factory IngredientsResponseModel({
-    List<IngredientsModel> drinks,
+    required List<IngredientsModel?> drinks,
   }) = _IngredientsResponseModel;
 
   factory IngredientsResponseModel.fromJson(Map<String, dynamic> json) =>

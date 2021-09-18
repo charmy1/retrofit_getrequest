@@ -4,10 +4,13 @@ part 'ingredients_model.freezed.dart';
 part 'ingredients_model.g.dart';
 @freezed
 
-abstract class IngredientsModel with _$IngredientsModel {
+ class IngredientsModel with _$IngredientsModel {
   @JsonSerializable(explicitToJson: true)
+  const IngredientsModel._();
+
   const factory IngredientsModel({
-    String strIngredient1,
+
+    String? strIngredient1,
 
   }) = _IngredientsModel;
 

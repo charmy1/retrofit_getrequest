@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import  'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,9 +9,8 @@ import 'package:ingredients_list/domain/ingredients_list/read_ingredients_interf
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
-part 'ingredients_bloc.freezed.dart';
-
 part 'ingredients_event.dart';
+part 'ingredients_bloc.freezed.dart';
 
 part 'ingredients_state.dart';
 @lazySingleton
@@ -25,6 +24,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
   Stream<IngredientsState> mapEventToState(
     IngredientsEvent event,
   ) async* {
+
     yield* event.map(readAllIngredients: (e) async* {
       yield state.copyWith(
           isSubmitting: true);

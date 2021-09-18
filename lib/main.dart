@@ -9,7 +9,7 @@ import 'injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await configureInjection(Environment.prod);
+  configureInjection(Environment.prod);
   runApp(MyApp());
 }
 
@@ -30,14 +30,16 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider<IngredientsBloc>(
+
         create: (context) => getIt<IngredientsBloc>()
           ..add(IngredientsEvent.readAllIngredients()),
+
         child: Scaffold(
           body: MyHomePageWidget(),
           appBar: AppBar(
@@ -50,7 +52,7 @@ class MyHomePage extends StatelessWidget {
 }
 
 class MyHomePageWidget extends StatefulWidget {
-  const MyHomePageWidget({Key key}) : super(key: key);
+  const MyHomePageWidget({Key? key}) : super(key: key);
 
   @override
   _MyHomePageWidgetState createState() => _MyHomePageWidgetState();
@@ -86,7 +88,7 @@ class _MyHomePageWidgetState extends State<MyHomePageWidget> {
                     itemCount: responseModel.drinks.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(responseModel.drinks[index].strIngredient1),
+                        title: Text(responseModel.drinks[index]?.strIngredient1??""),
                       );
                     },
                   )
