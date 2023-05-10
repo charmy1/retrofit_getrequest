@@ -72,7 +72,7 @@ class _MyHomePageWidgetState extends State<MyHomePageWidget> {
           a.fold((l) {
             final snackBar = SnackBar(
                 content: Text(FailureMessages().mapFailureToMessage(l)));
-            Scaffold.of(context).showSnackBar(snackBar);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }, (r) {
             responseModel = r;
           });

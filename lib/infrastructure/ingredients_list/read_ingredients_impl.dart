@@ -15,8 +15,8 @@ class IngredientsInterfaceImpl implements IngredientsInterface {
   Future<Either<Failure, IngredientsResponseModel>> readAllIngredients() async {
     try {
       var result = await _restClient.getIngredients("list");
-      print("Data");
-      print(result.toString());
+      //print("Data");
+      //print(result.toString());
 
       return right(result);
     } catch (e) {

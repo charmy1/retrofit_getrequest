@@ -1,6 +1,6 @@
 import 'dart:async';
-import  'package:flutter/foundation.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ingredients_list/core/failures.dart';
@@ -8,42 +8,40 @@ import 'package:ingredients_list/domain/ingredients_list/ingredients_response_mo
 import 'package:ingredients_list/domain/ingredients_list/read_ingredients_interface.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-
 part 'ingredients_event.dart';
+part 'ingredients_state.dart';
 part 'ingredients_bloc.freezed.dart';
 
-part 'ingredients_state.dart';
 @lazySingleton
 class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
   final IngredientsInterface _ingredientsInterface;
 
   IngredientsBloc(this._ingredientsInterface)
-      : super(IngredientsState.initial());
+      : super(IngredientsState.initial()) {
+    on<ReadAllIngredients>((event, emit) => _mapReadAllIngredientsToState(event, emit));
+  }
 
-  @override
-  Stream<IngredientsState> mapEventToState(
-    IngredientsEvent event,
-  ) async* {
+  void _mapReadAllIngredientsToState(
+      ReadAllIngredients event,
+      Emitter<IngredientsState> emit,
+      ) async {
+    emit(state.copyWith(isSubmitting: true));
 
-    yield* event.map(readAllIngredients: (e) async* {
-      yield state.copyWith(
-          isSubmitting: true);
+    var result = await _ingredientsInterface.readAllIngredients();
 
-      var result = await _ingredientsInterface.readAllIngredients();
-
-      yield state.copyWith(
-          isSubmitting: false, readFailureOrSuccessOption: optionOf(result));
-    });
+    emit(state.copyWith(
+      isSubmitting: false,
+      readFailureOrSuccessOption: optionOf(result),
+    ));
   }
 
   @override
   void onTransition(
-      Transition<IngredientsEvent, IngredientsState>
-      transition) {
+      Transition<IngredientsEvent, IngredientsState> transition,
+      ) {
     super.onTransition(transition);
-    print("IngredientsBloc");
-
-    print(transition.currentState);
-    print(transition.nextState);
+    // print('IngredientsBloc');
+    // print(transition.currentState);
+    // print(transition.nextState);
   }
 }
